@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "MVP",
-    "slug": "MVP",
+    "slug": "mvp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,15 +22,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mugenyi.MVP"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "15bbf100-8e52-4590-99ca-29ba4cc6f06a"
+        "projectId": "795ba89e-99e8-45e0-90c6-f19075cfb10f"
       }
-    }
+    },
+    "owner": "myndmap"
   }
 }

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
+import {MaterialIcons} from "@expo/vector-icons";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
