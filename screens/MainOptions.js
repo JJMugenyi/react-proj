@@ -17,10 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const handleAppleSignIn = async () => {
   if (!appleAuth.isSupported) {
-    Alert.alert(
-      "Not Supported",
-      "Apple Sign-In is not supported on this device."
-    );
+    Alert.alert("Error", "Apple Sign-In is not supported on this device.");
     return;
   }
 
@@ -98,24 +95,9 @@ const MainOptions = () => {
 
       <View style={styles.footerTextContainer}>
         <Text style={styles.footerText}>
-          By continuing you agree to MyndMap's{" "}
+          This build is currently in development and does not represent the
+          final result.
         </Text>
-        <TouchableOpacity
-          onPress={() => Linking.openURL("https://www.myndmap.uk")}
-        >
-          <Text style={[styles.footerText, styles.linkText]}>
-            Terms of Service
-          </Text>
-        </TouchableOpacity>
-        <Text style={styles.footerText}> and </Text>
-        <TouchableOpacity
-          onPress={() => Linking.openURL("https://www.myndmap.uk")}
-        >
-          <Text style={[styles.footerText, styles.linkText]}>
-            Privacy Policy
-          </Text>
-        </TouchableOpacity>
-        <Text style={styles.footerText}>.</Text>
       </View>
     </View>
   );

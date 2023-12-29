@@ -8,27 +8,13 @@ import SignupScreen from "./screens/SignupScreen";
 import SplashScreen from "./screens/SplashScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ProfileScreen from "./screens/ProfileScreen";
-import SettingsScreen from "./screens/SettingsScreen";
-import FeedbackScreen from "./screens/FeedbackScreen";
 import ForgotPasswordScreen from "./screens/ForgotPassword";
 import OnboardingScreen from "./screens/OnboardingScreen";
 import TaskAlgorithm from "./screens/TaskAlgorithm";
-import QuestionScreen from "./screens/QuestionScreen";
-import ExplanationScreen from "./screens/ExplanationScreen";
-import { MyndMapScoreProvider } from "./screens/MyndMapScoreContext";
-import NotificationHandler from "./screens/NotificationHandler";
-import * as Notifications from "expo-notifications";
+import SubtaskItem from "./screens/SubtaskItem";
+import FeatureExplanationScreen from "./screens/FeatureExplanationScreen";
 
 export const UserDataContext = createContext();
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
 
 const Stack = createStackNavigator();
 
@@ -57,7 +43,7 @@ export default function App() {
       }
       setLoading(false);
     }, 3000);
-  }, []);
+  }, [isAuthenticated]); // Add isAuthenticated as a dependency
 
   const screens = [
     { name: "Splash", component: SplashScreen },
@@ -65,14 +51,11 @@ export default function App() {
     { name: "Login", component: LoginScreen },
     { name: "Signup", component: SignupScreen },
     { name: "Dashboard", component: DashboardScreen },
-    { name: "Profile", component: ProfileScreen },
-    { name: "Settings", component: SettingsScreen },
-    { name: "Feedback", component: FeedbackScreen },
     { name: "ForgotPassword", component: ForgotPasswordScreen },
     { name: "Onboard", component: OnboardingScreen },
+    { name: "Subtask", component: SubtaskItem },
+    { name: "FeatureExplanation", component: FeatureExplanationScreen },
     // Adding the new screens to the array
-    { name: "Question", component: QuestionScreen },
-    { name: "Explanation", component: ExplanationScreen },
   ];
 
   return (
@@ -81,46 +64,43 @@ export default function App() {
       <UserDataContext.Provider
         value={{ userXP, setUserXP, userLevel, setUserLevel }}
       >
-        <MyndMapScoreProvider>
-          <NavigationContainer ref={navigationRef}>
-            <Stack.Navigator
-              initialRouteName={"Splash"}
-              screenOptions={{
-                transitionSpec: {
-                  open: {
-                    animation: "timing",
-                    config: {
-                      duration: 150,
-                      easing: Easing.inOut(Easing.ease),
-                    },
-                  },
-                  close: {
-                    animation: "timing",
-                    config: {
-                      duration: 150,
-                      easing: Easing.inOut(Easing.ease),
-                    },
+        <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator
+            initialRouteName={"Splash"}
+            screenOptions={{
+              transitionSpec: {
+                open: {
+                  animation: "timing",
+                  config: {
+                    duration: 150,
+                    easing: Easing.inOut(Easing.ease),
                   },
                 },
-                cardStyleInterpolator: ({ current }) => ({
-                  cardStyle: {
-                    opacity: current.progress, // Fade transition
+                close: {
+                  animation: "timing",
+                  config: {
+                    duration: 150,
+                    easing: Easing.inOut(Easing.ease),
                   },
-                }),
-                headerShown: false,
-              }}
-            >
-              {screens.map((screen) => (
-                <Stack.Screen
-                  key={screen.name}
-                  name={screen.name}
-                  component={screen.component}
-                />
-              ))}
-            </Stack.Navigator>
-          </NavigationContainer>
-        </MyndMapScoreProvider>
-        <NotificationHandler />
+                },
+              },
+              cardStyleInterpolator: ({ current }) => ({
+                cardStyle: {
+                  opacity: current.progress, // Fade transition
+                },
+              }),
+              headerShown: false,
+            }}
+          >
+            {screens.map((screen) => (
+              <Stack.Screen
+                key={screen.name}
+                name={screen.name}
+                component={screen.component}
+              />
+            ))}
+          </Stack.Navigator>
+        </NavigationContainer>
       </UserDataContext.Provider>
     </>
   );

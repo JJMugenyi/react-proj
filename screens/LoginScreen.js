@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -16,9 +17,12 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     try {
+      setLoading(true);
+
       const storedUserString = await AsyncStorage.getItem("user");
       const storedUser = storedUserString ? JSON.parse(storedUserString) : null;
 
@@ -35,6 +39,8 @@ const LoginScreen = () => {
       }
     } catch (error) {
       Alert.alert("Error", "There was an error logging in.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,6 +93,14 @@ const LoginScreen = () => {
       <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
         <Text style={styles.smallText}>Not got an account? Sign up</Text>
       </TouchableOpacity>
+
+      {loading && (
+        <ActivityIndicator
+          style={{ marginTop: 20 }}
+          size="large"
+          color="#1a1a1a"
+        />
+      )}
     </View>
   );
 };

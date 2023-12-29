@@ -10,7 +10,6 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignupScreen({ navigation }) {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,14 +19,14 @@ export default function SignupScreen({ navigation }) {
   };
 
   const handleSignup = async () => {
-    if (!isValidEmail(email) || !password || !name) {
+    if (!isValidEmail(email) || !password) {
       Alert.alert("Error", "Please fill out all fields correctly.");
       return;
     }
     try {
-      const newUser = { name, email, password };
+      const newUser = { email, password };
       await AsyncStorage.setItem("user", JSON.stringify(newUser));
-      Alert.alert("Success", "Account Created. Proceed to Onboarding.", [
+      Alert.alert("Success", "Account Created.", [
         { text: "OK", onPress: () => navigation.navigate("Onboard") },
       ]);
     } catch (error) {
@@ -45,12 +44,7 @@ export default function SignupScreen({ navigation }) {
       </TouchableOpacity>
       <Text style={styles.header}>Sign Up</Text>
       <Text style={styles.caption}>Create your Account.</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        placeholderTextColor="#1a1a1a"
-        onChangeText={setName}
-      />
+
       <TextInput
         style={styles.input}
         placeholder="Email"

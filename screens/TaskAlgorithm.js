@@ -9,6 +9,28 @@ const getDeadlineWeight = (deadline) => {
   return Math.max(0, 30 - timeDiff / (1000 * 60 * 60 * 24));
 };
 
+// Function to calculate a score based on task properties
+const calculateTaskScore = (task) => {
+  const priorityWeights = { Low: 1, Medium: 2, High: 3, Major: 4 };
+  const dopamineWeight = 0.5; // Adjust as needed
+  const estimatedTimeWeight = 0.2; // Adjust as needed
+  const creationDateWeight = 0.1; // Adjust as needed
+
+  const priority = task.priority || "Low"; // Default priority is Low
+  const deadlineWeight = getDeadlineWeight(task.deadline);
+  const dopaminePoints = parseFloat(task.dopamineReward) || 0;
+  const estimatedTime = parseFloat(task.timeEstimate) || 0;
+  const creationDate = new Date(task.creationDate).getTime();
+
+  const score =
+    priorityWeights[priority] * deadlineWeight +
+    dopaminePoints * dopamineWeight +
+    estimatedTime * estimatedTimeWeight +
+    creationDate * creationDateWeight;
+
+  return score;
+};
+
 // Exported sorting function with error handling
 export const sortTasks = (tasks) => {
   try {
@@ -17,28 +39,31 @@ export const sortTasks = (tasks) => {
       return [];
     }
 
-    const priorityOrder = { High: 3, Medium: 2, Low: 1 };
-
-    return [...tasks].sort((a, b) => {
-      const aScore = priorityOrder[a.priority] + getDeadlineWeight(a.deadline);
-      const bScore = priorityOrder[b.priority] + getDeadlineWeight(b.deadline);
+    const sortedTasks = [...tasks].sort((a, b) => {
+      const aScore = calculateTaskScore(a);
+      const bScore = calculateTaskScore(b);
 
       if (aScore !== bScore) return bScore - aScore;
-      if (a.priority !== b.priority)
-        return priorityOrder[b.priority] - priorityOrder[a.priority];
 
-      const aDeadline = new Date(a.deadline);
-      const bDeadline = new Date(b.deadline);
-      if (aDeadline.getTime() !== bDeadline.getTime())
-        return aDeadline - bDeadline;
+      const aDeadline = new Date(a.deadline).getTime();
+      const bDeadline = new Date(b.deadline).getTime();
+      if (aDeadline !== bDeadline) return aDeadline - bDeadline;
 
-      const aCreationDate = new Date(a.creationDate);
-      const bCreationDate = new Date(b.creationDate);
+      const aCreationDate = new Date(a.creationDate).getTime();
+      const bCreationDate = new Date(b.creationDate).getTime();
       return aCreationDate - bCreationDate;
     });
+
+    // Set isMostImportant property
+    if (sortedTasks.length > 0) {
+      const mostImportantTask = sortedTasks[0];
+      mostImportantTask.isMostImportant = mostImportantTask.estimatedTime > 60;
+    }
+
+    return sortedTasks;
   } catch (error) {
     console.error("Error sorting tasks:", error);
-    return []; // Return empty array in case of error
+    return []; // Return an empty array in case of an error
   }
 };
 
@@ -73,7 +98,13 @@ const TaskAlgorithm = ({ route }) => {
         data={sortedTasks}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Text>{`${item.title} - Priority: ${item.priority}, Deadline: ${item.deadline}, Created: ${item.creationDate}`}</Text>
+          <Text>{`${item.title} - Priority: ${item.priority}, Deadline: ${
+            item.deadline
+          }, Created: ${item.creationDate}, Score: ${calculateTaskScore(
+            item
+          )}, Dopamine Points: ${
+            item.dopamineReward || "Not provided"
+          }, Time Estimate: ${item.timeEstimate || "Not provided"}`}</Text>
         )}
       />
     </View>

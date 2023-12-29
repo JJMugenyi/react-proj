@@ -32,23 +32,6 @@ const MenuModal = ({ showMenu, setShowMenu, navigation }) => {
       >
         <MaterialIcons name="arrow-back" size={26} color="#1a1a1a" />
       </TouchableOpacity>
-
-      {/* Menu options */}
-      <MenuOption
-        label="Profile"
-        onPress={() => navigation.navigate("Profile")}
-        style={styles.menuOption}
-      />
-      <MenuOption
-        label="Settings"
-        onPress={() => navigation.navigate("Settings")}
-        style={styles.menuOption}
-      />
-      <MenuOption
-        label="Feedback"
-        onPress={() => navigation.navigate("Feedback")}
-        style={styles.menuOption}
-      />
       <MenuOption
         label="Logout"
         onPress={handleLogout} // Use the handleLogout function

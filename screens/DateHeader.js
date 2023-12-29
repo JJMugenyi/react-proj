@@ -29,13 +29,17 @@ const DateHeader = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    paddingRight: 2,
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
   },
   dateText: {
     fontSize: 18,
     fontWeight: "bold",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingRight: 15,
   },
 });
 

@@ -75,16 +75,16 @@ const OnboardingScreen = () => {
   function renderPages() {
     const pageData = [
       {
-        title: "Welcome to MyndMap!",
-        text: "Create, manage your tasks with ease - all in one place!",
+        title: "Welcome!",
+        text: "Welcome to your new productivity companion!",
       },
       {
-        title: "Prioritize in Style.",
-        text: "Keep track of your progress with our XP system - the more you complete, the more XP you earn!",
+        title: "No Sweat.",
+        text: "Assign your priorities, and let MyndMap do the rest.",
       },
       {
         title: "Get Started!",
-        text: "First off, we need to figure out your MyndMap Score.",
+        text: "Let's get you one step closer to being more productive!",
       },
     ];
 
@@ -115,31 +115,8 @@ const OnboardingScreen = () => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              Alert.alert(
-                "Proceed to Assessment?",
-                "Would you like to continue to the assessment?",
-                [
-                  {
-                    text: "No",
-                    onPress: () => {
-                      Alert.alert(
-                        "",
-                        "You can complete your assessment at any time.",
-                        [
-                          {
-                            text: "OK",
-                            onPress: () => navigation.navigate("Dashboard"),
-                          },
-                        ]
-                      );
-                    },
-                  },
-                  {
-                    text: "Yes",
-                    onPress: () => navigation.navigate("Explanation"),
-                  },
-                ]
-              );
+              // Directly navigate to the "Dashboard" screen without showing the initial alert
+              navigation.navigate("Dashboard");
             }}
           >
             <Text style={styles.buttonText}>Continue</Text>

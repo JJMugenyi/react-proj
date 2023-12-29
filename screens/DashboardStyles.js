@@ -52,10 +52,12 @@ export default StyleSheet.create({
   importantTaskSuggestion: {
     color: "#666", // Grey color
     fontSize: 14, // Adjust the font size as needed
-    padding: 10, // Add padding for spacing
+    padding: 20, // Add padding for spacing
+    fontStyle: "italic",
     textAlign: "center",
     // Other styling properties as needed
   },
+
   ellipsisIcon: {
     position: "absolute",
     left: 10, // Adjust as needed
@@ -66,17 +68,64 @@ export default StyleSheet.create({
     backgroundColor: "red",
     justifyContent: "center",
     alignItems: "center",
-    width: 80, // You can adjust this width
+    width: 70, // You can adjust this width
     height: "100%", // Make the button as tall as the task item
   },
   taskItemContainer: {
     // Original styles for the task item container
   },
   taskItem: {
-    // Original styles for the task item content
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    backgroundColor: "#fff",
   },
   taskItemText: {
-    // Original styles for the task item text
+    flex: 1,
+    marginLeft: 10,
+    fontSize: 16,
+    color: "#1a1a1a",
+  },
+  plusIconContainer: {
+    flex: 1, // Add this to allow the container to take up the available space
+    justifyContent: "center",
+    alignItems: "center",
+    paddingRight: 100,
+  },
+  subtaskInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+    color: "#1a1a1a",
+  },
+  subtaskContainer: {
+    backgroundColor: "#1a1a1a", // Set the background color for subtask items
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+    paddingHorizontal: 15, // Add horizontal padding for spacing
+    marginVertical: 3, // Add vertical margin for spacing between subtasks
+    borderRadius: 5, // Optional: if you want rounded corners
+    ...shadowStyles, // Applying shadow for depth (if needed)
+  },
+  subtaskText: {
+    fontSize: 14,
+    color: "#f7e8d3",
+    flex: 1,
+  },
+  subtaskCheckbox: {
+    marginLeft: 8,
+  },
+  subtaskInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#1a1a1a",
+    borderRadius: 5,
+    padding: 8,
+    marginRight: 5,
   },
   taskItemCompleted: {
     // Original styles for completed task item text
@@ -125,11 +174,11 @@ export default StyleSheet.create({
     paddingLeft: 10, // Space for the back arrow icon
   },
   deleteAction: {
-    backgroundColor: "red",
+    backgroundColor: "#1a1a1a",
     justifyContent: "center",
     alignItems: "center",
     width: 80, // Width of the delete button area
-    height: "100%", // Match the height with your task item container height
+    height: "80%", // Match the height with your task item container height
     borderTopRightRadius: 10, // Assuming a 10px border radius
     borderBottomRightRadius: 10,
   },
@@ -160,7 +209,6 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 10,
     paddingTop: Platform.OS === "ios" ? 30 : 20, // Adjust this value as needed
     backgroundColor: "#f7e8d3",
   },
@@ -286,18 +334,23 @@ export default StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  moodModal: {
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
-    flex: 1,
-    justifyContent: "center",
-  },
-
   modalOverlay: {
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.5)",
     flex: 1,
     justifyContent: "flex-end",
+  },
+  sliderContainer: {
+    marginVertical: 10,
+  },
+  slider: {
+    width: "100%",
+  },
+  sliderValue: {
+    textAlign: "center",
+    marginTop: 5,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 
   fullScreenMenuModal: {
@@ -324,6 +377,26 @@ export default StyleSheet.create({
     ...shadowStyles,
   },
 
+  dopamineSliderContainer: {
+    marginTop: 20,
+  },
+  dopamineLabel: {
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 10,
+  },
+  dopamineSlider: {
+    width: "100%",
+    height: 40,
+  },
+  dopamineValue: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
+    marginTop: 10,
+  },
+
   detailsPopup: {
     backgroundColor: "#f7e8d3",
     borderRadius: 10,
@@ -338,27 +411,28 @@ export default StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "#1a1a1a",
-    borderRadius: 20, // Rounded corners
-    padding: 25, // Padding inside the modal
+    borderRadius: 10, // Rounded corners
+    padding: 30, // Padding inside the modal
     width: "90%", // Modal width
-    alignSelf: "center", // Center the modal in the screen
+    alignSelf: "center",
     maxHeight: "80%", // Max height of modal
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     color: "white", // White text color
     marginBottom: 15,
+    alignSelf: "center",
   },
   modalInput: {
     marginBottom: 15,
     textAlign: "center",
     width: "100%", // Assuming full width is required
     height: 40,
-    borderColor: "gray",
+    borderColor: "grey",
     borderWidth: 1,
     padding: 10,
-    color: "white", // Text color for input
+    color: "#f7e8d3", // Text color for input
     backgroundColor: "#262626", // Background color for input
   },
 
@@ -379,7 +453,7 @@ export default StyleSheet.create({
   priorityButton: {
     borderWidth: 1,
     borderRadius: 20,
-    padding: 10,
+    padding: 15,
     paddingLeft: 20,
     paddingRight: 20,
     elevation: 2,
@@ -405,12 +479,18 @@ export default StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
-    marginLeft: 10, // Space between icon and text
+    marginLeft: 5, // Space between icon and text
   },
   prioritySelectionContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 10,
+    marginTop: 5,
+    // Add any other necessary styling
+  },
+  estimatedTimeButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+
     // Add any other necessary styling
   },
 
@@ -461,16 +541,17 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 10,
-    paddingHorizontal: 20, // Add horizontal padding for spacing
+    paddingHorizontal: 10, // Add horizontal padding for spacing
     marginVertical: 5, // Add vertical margin for spacing between items
-    borderRadius: 10, // Optional: if you want rounded corners
+    borderRadius: 5, // Optional: if you want rounded corners
     ...shadowStyles, // Applying shadow for depth (if needed)
     // Add other styling as required
   },
   taskItemText: {
     flex: 1, // Ensures the text takes up all the space in the row
     color: "#1a1a1a",
-    marginLeft: 10,
+    marginLeft: 6,
+    fontSize: 14,
   },
 
   priorityButtonLow: {
@@ -486,6 +567,28 @@ export default StyleSheet.create({
   priorityButtonSelected: {
     borderColor: "transparent", // Change to black for selected
   },
+  estimatedTimeButtonLow: {
+    // Style for estimated time button with 30 min
+    borderColor: "#FFD580", // Same as backgroundColor
+  },
+  estimatedTimeButtonMedium: {
+    // Style for estimated time button with 30 min
+    borderColor: "#FFD580", // Same as backgroundColor
+  },
+  estimatedTimeButtonHigh: {
+    // Style for estimated time button with 45 min
+    borderColor: "#FF0000", // Same as backgroundColor
+  },
+  estimatedTimeButtonMajor: {
+    // Style for estimated time button with 60 min
+    borderColor: "#000", // Same as backgroundColor
+  },
+
+  estimatedTimeButtonSelected: {
+    // Style for selected estimated time button
+    borderColor: "transparent", // Change to black for selected
+  },
+
   taskItemCompleted: {
     // ... other properties
     // Ensure color is set to '#1a1a1a' if you want completed tasks to have the same color
@@ -582,5 +685,6 @@ export default StyleSheet.create({
   placeholderText: {
     fontSize: 18,
     color: "#666", // Grey color for the placeholder text
+    fontStyle: "italic",
   },
 });
